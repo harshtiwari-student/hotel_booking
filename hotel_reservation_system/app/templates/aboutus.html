@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% load static %}
+{% block title %}hotel|Index{% endblock %}
+    
+{% block body %}
+<!-- About Us Section -->
+<section id="about" class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Image Column -->
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="{% static 'images/hello.png' %}" alt="About Us Image" class="img-fluid">
+            </div>
+            
+            <!-- Text Column -->
+            <div class="col-lg-6">
+                <h1 class="display-4">About Us</h1>
+                <div class="divider mb-4"></div>
+                <p>
+                    Welcome to HotelEase Your Comfort, Our Priority.
+                    At HotelEase, we believe that every journey deserves a perfect stay. Whether you're traveling for business, leisure, or a weekend getaway, were here to provide a seamless and memorable hospitality experience.
+                </p>
+                <p>
+                    Nowadays, however, more than 70% of diners visit a restaurant's website before deciding where to dine. This means the first impression happens long before they set foot on-premises, occurring online, where the restaurant description plays a pivotal role.
+                </p>
+                <a href="#" class="btn btn-brand mt-3">Explore Menu</a>
+            </div>
+        </div>
+    </div>
+    </section>
+{% endblock %}

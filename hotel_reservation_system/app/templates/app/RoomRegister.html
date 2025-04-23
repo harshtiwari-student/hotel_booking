@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Flipkart | Register Room{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <a href="room_form.html"><h2>Register a New Room</h2></a>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table class="table table-bordered">
+                    {{ form.as_table }}
+                </table>
+                <br>
+                <input type="submit" value="Register" class="btn btn-primary">
+                <a href="/rooms/"><button type="button" class="btn btn-secondary">Cancel</button></a>
+            </form>
+        </div>
+    </div>  
+</div>
+{% endblock %}

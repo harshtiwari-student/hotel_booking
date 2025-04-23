@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Complete Payment{% endblock %}
+
+{% block body %}
+<div class="container text-center mt-5">
+    <h2>Complete Your Payment</h2>
+    <p><strong>Room:</strong> {{ room.roomid }} ({{ room.roomtype }})</p>
+    <p><strong>Check-in:</strong> {{ booking.checkin_date }}</p>
+    <p><strong>Check-out:</strong> {{ booking.checkout_date }}</p>
+    <p><strong>Guests:</strong> {{ booking.guests }}</p>
+    <h4 class="text-success">Amount to Pay: ₹{{ amount|floatformat:2 }}</h4>
+
+    <button id="rzp-button1" class="btn btn-primary mt-3">Pay with Razorpay</button>
+</div>
+
+<!-- Razorpay JS -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    const options = {
+        "key": "rzp_test_wH0ggQnd7iT3nB",
+        "amount": "{{ amount|floatformat:0 }}",
+        "currency": "INR",
+        "name": "Hotel Booking",
+        "description": "Room Payment",
+        "order_id": "{{ order_id }}",
+        "handler": function (response) {
+            // Optional: Redirect or call AJAX to verify
+            alert("Payment successful! Razorpay Payment ID: " + response.razorpay_payment_id);
+            window.location.href = "/mybookings";  // or create a payment success page
+        },
+        "prefill": {
+            "name": "{{ request.user.get_full_name }}",
+            "email": "{{ request.user.email }}"
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+
+    const rzp1 = new Razorpay(options);
+    document.getElementById("rzp-button1").onclick = function (e) {
+        rzp1.open();
+        e.preventDefault();
+    };
+</script>
+{% endblock %}

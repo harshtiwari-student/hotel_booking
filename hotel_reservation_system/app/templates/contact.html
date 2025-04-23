@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Contact Us - HotelBooking{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+  <h2>Contact Us</h2>
+  <p>If you have any questions or need assistance, feel free to reach out to us. We're here to help!</p>
+  
+  <div class="row">
+    <div class="col-md-6">
+      <h4>Get in Touch</h4>
+      <form>
+        <div class="mb-3">
+          <label for="name" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="name" required>
+        </div>
+        
+        <div class="mb-3">
+          <label for="email" class="form-label">Email Address</label>
+          <input type="email" class="form-control" id="email" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="message" class="form-label">Your Message</label>
+          <textarea class="form-control" id="message" rows="4" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Send Message</button>
+      </form>
+    </div>
+
+    <div class="col-md-6">
+      <h4>Our Contact Info</h4>
+      <ul class="list-unstyled">
+        <li><strong>Phone:</strong> +1 (123) 456-7890</li>
+        <li><strong>Email:</strong> support@hotelbooking.com</li>
+        <li><strong>Address:</strong> 123 Luxury St., City, Country</li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
