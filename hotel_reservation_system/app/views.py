@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from .models import Room,Booking,Address,Payment
+from django.db.models import Max
 
 from datetime import datetime
 from django.contrib import messages
@@ -228,10 +229,30 @@ def bookroom(request, roomid):
         nights = (checkout_date - checkin_date).days
         total_price = room.price_per_night * nights
 
+        last_booking = Booking.objects.aggregate(Max('bookingid'))['bookingid__max'] or 0
+        new_bookingid = last_booking + 1
+
+        booking = Booking.objects.create(
+            bookingid=new_bookingid,
+            userid=request.user,
+            roomid=room,
+            checkin_date=checkin_date,
+            checkout_date=checkout_date,
+            guests=guests,
+            payment_method=payment_method,
+            totalprice=total_price,
+        )
+        
+
         # Store booking temporarily in session
         request.session["booking_data"] = {
             "roomid": room.roomid,
-            "checkin_date": checkin,
+            "roomtype": room.roomtype,
+        }
+        # Store booking temporarily in session
+        request.session["booking_data"] = {
+            "roomid": room.roomid,
+           "checkin_date": checkin,
             "checkout_date": checkout,
             "guests": guests,
             "payment_method": payment_method,
@@ -251,13 +272,10 @@ from django.contrib import messages
 def final_payment(request):
     booking_data = request.session.get("booking_data")
     if not booking_data:
-        return redirect("home")
+        return render(request, 'final_payment.html', {'booking': None})
 
-    room = get_object_or_404(Room, pk=booking_data["roomid"])
-
-    return render(request, "payment.html", {
-        "room": room,
-        "data": booking_data
+    return render(request, "final_payment.html", {
+        "booking": booking_data
     })
     
 
